@@ -1,25 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from 'react';
 
 function App() {
+  const [userInput, setUserInput] = useReducer(
+    (state, newSatate) => ({...state, ...newSatate}),
+    {
+      firstName: ''
+    }
+  );
+
+  const onChange = evt => {
+    const {name, value} = evt.target;
+    setUserInput({[name]: value});
+  }
+
+  const onSubmit = evt => {
+    evt.preventDefault();
+    console.log(userInput);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <form onSubmit={onSubmit}>
+      <input type="text" name="firstName" onChange={onChange} value={userInput.firstName} />
+      <input type="submit" value="Enviar" />
+    </form>
   );
 }
 
